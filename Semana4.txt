@@ -1,0 +1,84 @@
+Dados:
+    Estruturados:
+        ■ Bases de dados
+        ■ Dados multidimensionais: Atributos chave-valor
+        ■ Dados retangulares ou quadros de dados (DataFrame)
+
+    Não estruturados:
+        ■ Textos
+        ■ Imagens e Vídeos
+        ■ Sons
+        ■ Séries Temporais
+
+    ● Uma coleção de objetos e seus atributos (dataset) 
+    
+    ● atributo = propriedade ou característica de um objeto (instância) 
+        ○ Exemplos: a cor dos olhos de uma pessoa, a sua temperatura, etc.
+        ○ Atributos também são conhecidos como variáveis, campos, características
+
+    ● Uma coleção de atributos descreve um objeto 
+        ○ Objetos também são conhecidos como registro, caso, exemplo, entidade, instância.
+    
+    ● Qualidade dos dados
+        ○ Dados são imperfeitos
+        ○ Afeta diretamente o resultado do projeto
+
+    ● Pré-processamento
+        ○ Transformam e preparam dados brutos
+        ○ Certas técnicas requerem tipos de dados específicos
+
+    Aspectos importantes:
+    ● Tipos de variáveis (atributos)
+        ○ Afetam diretamente as ferramentas e técnicas
+
+        ● Numérico/Quantitativo
+            ○ Contínuo: podem assumir qualquer valor em um intervalo
+                ○ Ex: temperatura, altura, peso
+                ■ Ex: Velocidade do vento, tempo de duração, etc.
+            
+            ○ Discreto: possui apenas um número finito ou contáveis de valores
+                ○ Ex: códigos postais, contagens, categorias, valores binários
+                ■ Ex: Contagens, valores inteiros
+        
+        ● Categórico/Qualitativo
+            ○ Conjunto fixo de valores
+                ■ Ex: tipo de TV (plasma, LED, LCD), estado (RS, SC, PR)
+                ■ Tipo especial: binário = 0/1 - Sim/Não - True/False
+        
+        Distinção entre atributo e valor do atributo
+            ● Escala de medida é relevante
+                ○ Atributos podem ser medidos em diferentes escalas
+                    ■ Altura: cm, m, ft ...
+                    ■ Temperatura: C, F, K
+
+            ● Escalas possuem relação direta com as operações possíveis sobre os valores.
+                ● Qualitativos
+                    ○ Nominais
+                    ○ Ordinais
+                
+                ● Quantitativos
+                    ○ Intervalares
+                    ○ Racionais
+        
+        Escalas estão relacionadas a operações possíveis:
+            Distinção/Comparação: = e ≠
+            Ordem: < e >
+            Diferenças: + e -
+            Razões: * e /
+        
+            Nominal: distinção
+            Ordinal: distinção e ordem
+            Intervalar: distinção, ordem & diferenças
+            Racionais: todas as 4 operações
+        
+        Diferenças entre valores racionais e intervalares
+            Existe significado físico em dizer que uma temperatura de 10º é o dobro de 5º?
+            
+            ● Na escala Celsius?
+            ● Na escala Kelvin?
+            
+            Ao dizer que Marcos é 10cm mais alto do que a média da população, e Pedro é 20cm mais alto do que a média, isso é o equivalente a dizer que
+            Pedro é duas vezes mais alto do que Marcos? Como esse caso é semelhante ao exemplo da temperatura?
+
+===============================================================================================================================================================
+(Incrementar aqui com as notas dos slides)

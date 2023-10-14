@@ -1,0 +1,155 @@
+Regressão linear:
+    - aprendizado superivisionado: (x1,y1)....(x2,y2)
+    - regressão ou estimação: valores contínuos
+    - construção de um modelo que permite estimar os valores
+    - uso de modelos lineares: y = a*x + b
+
+    - regressão simples (univariada): 
+        - obtida por meio de uma análise eexploratória dos dados
+        - verificação do coeficente de pearson, para observar se os dados se relacionam (coeficente de pearson vairando entre 0 a 100 %)
+
+        - y' = ax + b (1)
+        - estabelecer qual reta descreve a correlaçao entre os dados, (passa pela maior parte do numero de dados (N))
+        - avaliaçao do erro médio da reta
+            MSE = 1:N * Sum ( {N, i=1} (yi - yi')** 2)
+
+    Procedimento geral:
+        1 - Inicalizar os parametros (pesos) de forma aleatória
+        2 - Com base no conjunto de treinamento, calcular o MSE (Calculo do gradiente)
+        3 - Atualizar os parametros obejtivando minimizar o erro (atualizacao do valor do gradiente)
+        4- Repetir 2 e 3 até o critério de parada
+    
+    Regressao linear: Minimizando o erro
+    wi <- wi + Delta wi
+
+    Delta wi = - n * (Alfa * E):(Alfa * wi) --> calculo da derivada parcial do erro em relacao a variável wi, multiplicando pela taxa de aprendizagem "n"
+
+    Regressao linear - multivariada:
+        y' = w0 + w1* x1 + w2 * x2 + ... + wn * xn
+
+        Ou, pode-se entender como uma multiplicacao de vetores:
+        y' = W * N -> (vetor de valores W e N)
+
+    
+    Regressao logística:
+        ◉ Aprendizado Supervisionado: (x1,y1).....(x2,y2)
+        ◉ Classificação: valores discretos/nominais
+        ◉ Separação dos dados em uma ou mais categorias
+        ◉ Pode ser utilizada para estimar a probabilidade de um evento ocorrer dado um conjunto de variáveis independentes
+
+        Utilizando uma funcao logística:
+            y = 1: (1 + e¨(-wx))
+
+        O procedimento geral é o mesmo que a regressão linear
+
+        ● Múltiplos Classificadores
+        ● Um contra todos
+        ● Maior valor ʻvenceʼ
+
+Redes Neurais:
+    ◉ Inpiração Biológica
+        ◉ Cérebro: reconhecimento de padrões, percepção, controle motor muito mais rápido e melhor que os computadores
+            ■ Neurônios muito mais lentos que circuitos de silício - 10-3s (mili) x 10-9s (nano)
+            ■ Compensação pelo número de neurônios (unidades básicas): aprox. 10 bilhões com 60 trilhões de sinapses
+
+    Modelo simples:
+        Perceptron de Rosenblatt
+
+        Entradas X1....Xn, Pesos W1....Wn     --> Soma{L i=1}(Wi * Xi) -> F(Z) Funçao de ativaçao -> y' Saída
+
+            --> 0 se Soma < threshold
+        y' = 
+            --> 1 se Soma > threshold
+        
+        ◉ Múltiplas funções de ativação - degrau
+            - Funcao degrau 
+            - Funcao sigmoide
+            - Funcao tangent hiperbólica
+            - RELU (Rectifier Linear Unit) e Softplus
+        
+        ◉ Perceptron - classificação binária - linear
+    
+        Problema:
+            ◉ Maior parte dos problemas = não linearmente separáveis
+        
+        Solucao:
+            ◉ Multi-layer Perceptron - rede de perceptrons
+                ◉ Redes Neurais Artificiais (ANN’s)
+                ◉ Resolvem o problema da não separabilidade
+
+            ◉ Propriedades da rede determinadas pela:
+                ◉ Topologia
+                ◉ Propriedade dos “neurônios”
+
+            ◉ Múltiplas topologias e características
+                ◉ Alimentação para frente (feedforward)
+                ◉ Redes recorrentes
+                ◉ Autoencoders
+                ◉ Diversas outras
+            
+            ● Operação distribuída: cada ϿneurônioЀ e partes da rede processamento parte das informações
+            ● Tolerância a ruídos e informações imprecisas
+            ● capacidade de “aprender” e generalizar
+            ● Podem representar qualquer função matemática - teorema da aproximação universal
+        
+            ◉ Problemas de difícil modelagem matemática:
+                ◉ reconhecimento de padrões em imagens e vídeos
+                ◉ processamento de linguagem natural
+                ◉ controle robótico
+                ◉ reconstrução de dados - imagem, texto, séries temporais
+                ◉ extração de features - ex: word embeddings
+                ◉ Inúmeras aplicações
+                ■ Aprendizagem supervisionada e não-supervisionada
+            
+            Treinamento:
+                - Cada aresta de uma rede neural possui um peso associado, que representa a força da ligaçao entre os respectivos nodos
+
+                treinamento = encontrar pesos que melhor aproximem a saída:
+                    Como = Incializacao aleatória + backpropagation
+
+                    Backpropagation:
+                        1- insere-se um exemplo X na rede e propagamos para frente até chegarmos ao resultado. Ex:    y1 = f1(w1(x1) * x1 + w2(x2) * x2)     --> Em que f1 pode ser qualquer funçao (hiperbólica, sigmoide)
+                        2- Computa-se o erro quadrático para cada nodo j da camada de saída.
+                        3- Propagamos o erro partindo da camada de saída até a camada de entrada. Cada nodo da rede terá seu valor de erro(z). (S = z - y)
+                        4- Atualizamos os pesos de cada conexao da rede de acordo com os erros relativos aos nodos em questao (Gradiente Descendente).
+                            w'(x1)1 = w(x1)1 + n * S1 df1(e)/d(e) * x1
+                            w'(x2)1 = w(x2)1 + n * S1 df1(e)/d(e) * x2
+
+                            n: taxa de aprendizado
+                            df1(e)/d(e): derivada da funçao de ativaçao
+                        
+                        Para usarmos algoritmos de backpropagation, precisa-se de uma funçao de ativaçao derivável, que pode ser:
+                            - Sigmoid: 1/ 1 + e**(-z)
+                            - Hyperbolic Tangent: e**(z) - e**(-z)/ e**(z) + e**(-z)
+                            - Retified Linear: 0 if z < 0 or z if z >= 0
+                            - Radial Basis Function: (z,c) = e**(e||Z-e||)**2
+                            
+
+                        ● Computacionalmente custoso - especialmente para grandes volumes de dados
+                        ● Para usar a descida do gradiente (Gradient Descent), o cálculo do erro (função de custo) implica na ativação da rede usando cada entrada do data set
+                        ● Cada atualização do erro usando GD é chamada de época (epoch)
+                        ● 1000 exemplos → 1000 ativações a cada época
+
+                        - Uma versao alternativa e mais rápida é o Gradiente Descendente Estocástico (SGD), neste o update dos pesos é feito a cada amostra de treino
+
+                        - Converge mais rápido, porém apresenta mais ruído em relacao as amostras.
+
+                        Em termos práticos. usa-se um meio termo GD completo e SGD, chamada de Mini-batch SGD, usando partiçoes de batches da acordomostra de treino a cada laço do SGD ao invés de uma única amostra.
+            
+                hiper-parâmetros
+                    ● Como definir???
+                        ○ Topologia
+                        ○ Número de camadas
+                        ○ Neurônios
+                        ○ Função de ativação
+                        ○ Tamanho dos mini-batches
+                        ○ Epochs
+                        ○ E etc
+
+                        Manualmente: Validação cruzada e exploração dos parâmetros
+                        Automaticamente: AutoML - HyperNEAT - Grid e Random Search
+
+
+                    
+                    
+

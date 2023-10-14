@@ -1,0 +1,141 @@
+Classificação:
+    Atribuição de classes á instancias de dados
+
+    Conceitos básicos:
+        Aplicação                          - Conjunto de atributos x                - rótulo/classe,y 
+            Categorizar mensagens de email - Atributos extraídos do texto e         - SPAM OU NÃO SPAM 
+                                             do cabeçalho da mensagem
+
+            Classificar tumores            - Atributos extraídos de exames          - malígno e benígno
+
+            Catalogar galáxias             - Atributos extraídos de imagens         - Elíptica, espiral ou irregular
+                                             telescópicas
+
+
+    Registros (instancias): tupla (x,y) onde
+        --> x é o conjunto de atributos              --> atributo discreto    (variável )
+        --> y é a classe (variável alvo, rótulo)     --> atributos categórico (variável nominal)
+
+        Definição:
+            - É a tarefa de aprender uma função alvo f que mapeia cada conjunto de atributos "x" para uma classe "y".
+        
+        A função "f" é normalmente o modelo de Classificação.
+
+    Utilidade de um modelo:
+        - Modelagem descritiva: esclarecem quais atributos possui maior importancia na Classificação.
+                Exemplo: 
+                        Correlação de saneamento básico e educação:
+                            - frequencia de extração de lixo
+                            - quantidade de alunos que concluem o ensino médio
+
+        - Modelagem preditiva: permite Classificar novos registros - modelos de caixa preta.
+
+    Dados de entrada: conjunto de dados rotulados (supervisionado)
+
+    Treinamento/aprendizado: produz um modelo
+
+    Modelo: capaz de Classificar novas instancias
+
+        Problema: o modelo se adequa apenas aos dados do modelo - overfitting
+
+        Desejado: generalização dos dados para qualquer situação
+    
+
+    - Avaliação dos modelos:
+
+        - Matriz de confusão      _______________________
+                                 | Classe Predita        |
+            _____________________|Classe = 1| Classe = 0 |
+            | Classe| Classe = 1 |  f11     | f10        |
+            | Atual | Classe = 0 |  f01     | f00        |
+
+                Quando temos acerto são os elementos da diagonal principal f11 , f00
+
+            
+                Ver (slides 15,16)
+                É possível verificar se interpretação dos dados está sendo feita corretamente, 
+                se a matriz detém muita dispersão dos dados, o modelo não está efetivamente intepretando os dados
+                quanto mais próximo de 1 (100 %) o valor da matriz principal é.
+
+                Taxa de Acurácia: Número de predições / (Número de predições erradas ) = Soma(Mixj){i == j} / Soma(Mixj) {i != j}
+
+                Taxa de Erro: (Número de predições erradas ) / ( Número de predições) =  Soma(Mixj) {i != j} / Soma(Mixj){i == j}
+
+        - Diversas métricas de performance
+    
+    Técnicas para evitar o overfitting:
+
+        - Holdout : Aleatorização dos dados e mantendo parte dos dados fora do connjunto de testes
+        - Parada prematura: parar antes de chegar no limite de ajuste
+        - Aumentar os dados: 
+
+    Algoritmos de aprendizagem:
+        - Arvores de decisão (Ver slide 26)
+
+        Arvores de Decisão - ID3:
+            Algoritmo simples que constroi uma arvore de decisão sobre a seguintes premissas:
+                - Cada vértice simboliza um atributo, e cada aresta a um valor possível do atributo
+                - Uma folha da arvore, corresponde ao valor esperado da decisão segundo os dados de treino usados.
+
+            A explicação sobre uma determinada solução está relacionada a trajetória que vai do raiz até a folha representativa
+    
+            Para construir uma árvore de decisão, segue-se os seguintes procedimentos:
+                - Considerando a existencia de um dataset bagunçado (Olha slide 52)
+
+                - identifica os atributos de um mesma classe e os divide em conjuntos de dados menores, por meio do teste e da escolha destes
+                    Como testar:
+                        - Cálculo da entropia: - Soma(c-1;i=0; pi * log2(pi(t)))
+
+                        gini index = 1 - Soma(c-1; i=0; pi(t)^2)
+
+                        Erro de classificação =  1 - max(pi(t))
+
+                        pi(t) --> frequencia de ocorrencia de classe i no nodo t, e c é o número total de classes
+                
+                Exemplo:
+                    Considerando 2 valores possíveis da classe
+                        Entropia(S) = - (p+ log2 p+ + p- log2 p-)
+
+                        Onde:
+                            - S: total de amostras do conjunto
+                            - p+: proporção de amostrar positivas
+                            - p-: proporção de amostras negativas
+
+                            Levando em conta uma amostra com 14 exemplos, com 9 instancias positivas e 5 negativas
+                            S = -(9/14 * log2 9/14 + 5/14 * log2 5/14) --> 0.940
+                    
+                        O ganho de informação é a redução esperada da entropia ao utilizar um atributo na árvore.
+
+                            G(S,A) = Entropia(S) - Soma((|Sv| / |S|) Entropia(Sv))
+                            
+                            Onde:
+                                |S| --> número de elementos de S
+                                |Sv| --> número de elementos de Sv
+                                Sv --> Subconjunto de S para um valor do atributo A
+                                G --> função de ganho de informação comparando a entropia anterior para a atual
+                            
+                                (Ver slide 59)
+                        
+                        Vantagens do método:
+                            - Simples e intuitivo
+                            - Construção barata
+                            - Extremamente rápido para classificar novos registros
+                            - Modelo interpretável
+                            - A Acurácia é comparável a outros métodos de classificação para muitos conjuntos de dados
+                        
+                        Desvantagem:
+                            - Sensível a overfitting
+                            - Não trabalha com dados faltantes
+                            - Valores contínuos são um problema
+
+    Arvores de Decisão- C4.5
+        - Atributos podem ter valores desconhecidos
+        - trabalha com valores contínuos
+        - usa pruning para reduzir overfitting
+        - gera regras de decisão a partir da árvore
+
+         
+
+
+
+        

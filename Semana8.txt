@@ -1,0 +1,252 @@
+Avaliação de modelos
+    ● Avaliar o desempenho do classificador em novas instâncias (generalização)
+    ● Conjunto de teste permite medir a capacidade de generalização
+    ● Múltiplas métricas
+
+    Matriz de Confusao:
+                
+        ___________________Sim_______Nao__
+        Classe Real ! Sim !   VP  !   FN   !
+                    ! Nao !   FP  !   VN   !
+        ____________!______________________!
+
+        VP: Verdadeiro Positivo ! FN: Falso Negativo
+        VN: Verdadeiro Negativo ! VN: Verdadeiro Negativo
+
+        Métricas de avaliçao da matriz de confusao:
+            Acurácia: ((VP + VN): n) * 100 %
+
+            Erro: ((FP + FN): n) * 100 %
+
+            Precisao: (VP:(VP + FP)) * 100 %
+
+            Taxa de VP (sensibildidade, abrangencia, recall): (VP:(VP + FN)) * 100%
+
+            Taxa de VN (especificidade): VN:(VN + FP) * 100 %
+
+            F1-Score: (2 * precisao * recall) : (precisao + recall) >> média harmonica entre precisao e recall
+
+            Limitaçoes da Acurácia:
+                - Considere um problema de 2 classes - cancer e saudável:
+                    - Numero de exemplos da classe saudável: 9.990
+                    - Numero de exemplos da classe cancer: 10
+
+                - Se o modelo classificar todas as novas instâncias como saudáveis, a acurácia é de 9990:1000 = 99,9 %
+
+                    - a acurácia é enganosa porque o modelo nao detecta nenhum exemplo da classe cancer
+                        Precisao = 0
+                        sensibildidade = 0
+        
+    Avaliação de Modelos -
+        Holdout:
+            ● Medir o desempenho sobre os dados de treinamento não é um bom indicador de desempenho sobre dados futuros: é muito otimista
+
+            ● Solução simples pode ser usada se existirem muitos dados rotulados:
+                → Dividir dados em conjuntos de treinamento e de teste
+                
+                ● Mas: normalmente o número de dados rotulados é limitado
+
+                → São necessárias técnicas mais sofisticadas de avaliação
+            
+                ● Geralmente, quanto maior o conjunto de treinamento melhor o classificador
+
+                ● Quanto maior o conjunto de teste mais exata será a estimativa de erro
+
+                ● Procedimento holdout (retenção): dividir os dados originais em conjuntos de treinamento e de teste 
+                    ○ Dilema: queremos tanto um grande arquivo de treinamento quanto um grande arquivo de teste
+                
+                ● Para uma medida mais precisa : sub-amostragem aleatória (random subsampling)
+                    ○ Repetir o processo k vezes
+                    ○ Usar a média do desempenho
+                    ○ Registros podem se repetir no conjunto de treinamento
+                
+                ● Método holdout reserva uma certa quantidade dos dados para teste e usa o resto para o treinamento
+                    ○ Usualmente 1/3 para teste, o resto para treinamento
+                
+                ● Mas: as amostras podem não ser representativas
+                    ○ Exemplo: pode não haver amostras de uma classe nos dados de teste
+
+                ● Versão avançada usa estratificação
+                    ○ Assegura que cada classe esteja representada com proporções aproximadamente iguais em ambos os conjuntos
+    
+        Cross validation:
+            1. Primeiro passo: conjunto de dados é dividido em k subconjuntos de tamanhos iguais
+            
+            2. Segundo passo: um subconjunto é usado para teste e os demais para treinamento.
+            
+            3. O segundo passo é repetido k vezes, variando o subconjunto usado para teste
+            
+            ● Esta é a chamada validação cruzada por k vezes (k-fold)
+            ● Muitas vezes os subconjuntos são estratificados antes de realizar a validação cruzada
+            ● A estimativa de erro global é calculada como a média das k estimativas de erro (uma para cada iteração)
+
+            6-fold cross validation:
+                X -> validation set
+                Y -> Training set
+
+                                        Round 1  Round 2 Round 3    Round 4  Round 5 Round 6
+                                            X       Y       Y           Y       Y       Y
+                                            Y       X       Y           Y       Y       Y
+                                            Y       Y       X           Y       Y       Y
+                                            Y       Y       Y           X       Y       Y
+                                            Y       Y       Y           Y       X       Y
+                                            Y       Y       Y           Y       Y       X
+            Model accuracy on each          93%     91%     83%         94%     90%     95%
+            validation set:
+
+            Acurracy: mean(93,91,83,94,90,95) = 91 %
+
+            ● Validação cruzada deixando um fora (leave-one-out):
+                ○ O número de vezes é escolhido como o número de exemplos de treinamento
+                ○ Isto é, deve-se construir n classificadores, onde n é o número de exemplos de treinamento
+            
+            ● Aproveita ao máximo os dados
+            ● Não envolve sub-amostragem aleatória
+            ● Computacionalmente: muito custoso
+
+            Training Set: 60 %          Validation Set: 20 %        Testing set: 20 %
+                                            iteractive                  just once
+        
+        ● Princípio importante para a escolha de modelos: navalha de Occam
+        
+            ○ Dados dois modelos com desempenho similar, o modelo mais simples é preferível (DUVIDA: se eu tenho um modelo mais simples, porem, computacionalmente mais custoso é preferível este a outro modelo mais complexo)
+
+    Naïve Bayes
+        ● Técnica de classificação baseada em raciocínio probabilístico
+            ○ Em muitos casos, relações entre atributos e variável-alvo são não-determinísticas.
+        
+            ○ Ex: fazer exercícios regularmente e ter uma dieta saudável não garante uma vida sem doenças cardíacas.
+        
+            ○ Além da classe, classificadores bayesianos oferecem também uma medida de confiança/incerteza.
+
+                ● principal objetivo destes métodos é construir um modelo probabilístico a partir do conjunto de dados de entrada que permita realizar inferências sobre novos dados.
+
+                ● Baseia-se no teorema de Bayes, por isso chamado aprendizado bayesiano
+        
+        Algumas das características:
+            ● Cada instância do conjunto de dados de treinamento pode aumentar ou reduzir a probabilidade que uma determinada hipótese está correta - mais flexível que métodos determinísticos
+
+            ● Além da utilização de um conjunto de dados de treinamento, é possível incorporar conhecimento prévio aos modelos (prior knowledge) - adapto a conjuntos de dados pequenos
+            
+            ● Fornecem informações em relação a confiança/incerteza sobre as inferências realizadas com o modelo probabilístico.
+        
+        Probabilidade Condicional: probabilidade que um evento A ocorra, dada a ocorrência de um evento B → P(A|B)
+            A→ pneumonia
+            B→ febre
+                (Ver slide 22)
+
+                Conceitos básicos:
+                (1) P(B ∩ A) = P(A|B) P(B)
+
+                (2) P(A ∩ B) = P(B|A) P(A)
+
+                (3) Considerando que (1) é igual a (2), observa-se a seguinte equacao:
+
+                    P(B|A) P(A) = P(A|B) P(B) --> Teorema de Bayes
+            
+            Aprendizagem para um dado evento:
+                Evidencia E = exemplo (registro, com os valores dos atributos)
+                Hipotese H = valor da classe para o exemplo
+
+                Teorema de Bayes:
+                    P(H|E) = (P(E|H) * P(H)) :P(E)
+
+                    *Leia-se: A probabilidade de uma dada classe sobre um exemplo (P(H|E)), é dada pela probabilidade de todos os exemplos do conjunto de treinamento sobre a classe ((P(E|H)))
+                              multiplicada pela probabilidade de obter a classe (P(H)), divido pela probabilidade do registro (P(E)).
+                
+                Suposiçao do classificador bayesiano ingenuo: evidencia pode ser separada em partes independentes (os atributos exemplo). --> ignora a dependencia entre atributos
+
+                P(E1, E2, ....,En | H) =P(E1 |H ) * P(E2|H)... *P(En |H)
+                
+                P(H|E) = (P(E1|H) * P( E2 | H)... *P(En | H)*P(H)) : (P(E).P(E2)....P(En))
+
+                Ver slides 27 a 33
+
+            Problema da frequencia zero
+
+            - Se um valor de atributo nunca ocorrer para uma classe (como por exemplo Aspecto = nublado para a classe N)
+                - A probabilidade será zero ! P(nublado|N) = 0
+                - A probabilidade a posteriori será zero, independentemente dos outros valores ! P(N|E) = 0
+
+            - Soluçao: Estimador de Laplace -> somar 1 á contagem de todas as combinaçoes de classe e valor de atributo
+
+            - Resultado: as probabilidades nunca serao zero
+
+            Vantagens:
+                - rápido
+                - bons resultados em dados reais
+
+            Desvantagens:
+                - Resultados nao tao bons em problemas complexos
+            
+            Mozilla Thunderbird e Outlook usam classificadores naive bayes para filtram emails que seriam spam
+    
+    K-NN: k Nearest Neighbor (k vizinhos mais próximos)
+        ● Método simples
+        ● procura o(s) registro(s) os k registros próximo(s)
+        ● proximidade = similaridade
+        ● para classificar o novo registro
+
+        - Instancias sao representadas por pontos em um espaço n dimensional Rn
+            instancia x = < a1(x),a2(x), a3(x), ..., an(x)>
+
+            A distancia entre as instancias pode ser calculada pela distancia euclidiana ou outras métricas de similaridade
+                d(xi,xj) = (soma de r =1, até r = n(ar * (xi) - ar * (xj))**2)**(1:2)
+        
+        Procedimento para classificar uma nova instância:
+            1. Calculam-se as distâncias para o conjunto de dados históricos
+            2. Determinam-se os k registros mais próximos (similares)
+            3. Calculam-se as frequencias das classes destes registros
+            4. O resultado da classificação é classe com maior frequência dentre os k vizinhos mais próximos
+
+        Exemplo:
+            x = (idade(x),altura(x),peso(x), classe(x), onde a classe pode ser "S" ou "N"):
+            - Dados classificados:
+                - José = (30,1.78,72,S)
+                - Maria = (25,1.65,60,S)
+                - Anastácia = (28,1.6,68,N)
+            
+            -Dado a classificar:
+                - joao = (36,1.80,76, xx)
+            
+            - Cálculo das distancias: usando k = 1
+                d(joao,jose) = [(36-30)**2 +(1.80-1.78)**2 + (76 - 72)**2]**(1:2) = 7,21
+                d(joao.maria) = (121 + 0.0225 + 256)**(1:2) = 19,41
+                d(joao,Anastácia) = (64+0.04+64)**(1:2) = 11,32
+
+            A classe joao é S, dado que a classe de josé é a que mais se aproxima de Joao.
+
+        - Problema da dimensionalidade:
+            - Para calcular a distancia entre os pontos, o método utiliza todos os atributos da instancia
+        
+            -Consequencias:
+                - pode custar caro
+                - atributos irrelevantes podem deturpar a classificaçao
+
+            -> Dado que nao gera modelo e sim compara sempre todos os registros, pode ser um método lento.
+    
+    SVM:
+        Support Vector Machine (SVM)
+        
+            Máquina de Vetores de Suporte [Vapnik et al, 1998]
+            
+            Método matemático baseado no Teorema de Lagrange
+            
+            → Usa um subconjunto dos dados de treinamento (vetores de suporte) para definir a melhor forma de separar os dados
+
+            Qual o hiperplano ótimo para separar as duas classes?
+                → Menor erro de classificação
+                → Maior margem
+                → distância entre vetores de suporte e o hiperplano
+            
+            Constrói fronteiras não lineares usando kernel functions (transformação de dados)
+        
+            Vantagens:
+                → permite construir fronteiras não-lineares
+                → pode ser formulado como um problema de otimização convexa e portanto permite encontrar uma solução ótima
+                → pode ser aplicado a variáveis categóricas (one hot encoding)
+
+            Desvantagens:
+                → computacionalmente custoso
+                → sensível a ruídos
+                → escolha dos parâmetros tem influência significativa no resultado

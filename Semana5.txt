@@ -1,0 +1,205 @@
+Preparação dos dados
+    Exemplo:
+        Para avaliar o interesse de consumidores através de sua interação
+        com uma mídia social (ex: instagram) um Analista de Dados precisa
+        determinar os tipos de atividades interessantes
+            ● Interesses do usuário (obtidas pelo perfil)
+            ● comentários (texto)
+            ● grupo de amigos e seguidores (grafo)
+            ● postagens (imagem)
+            ● curtidas (indicam outros tipos - textos - imagens)
+            ● diferentes tipos, formas e fontes
+
+    Moral da história: para ter utilidade, os dados precisam ser preparados
+
+    1- Extração de Features e Portabilidade:
+
+        ● Crucial e dependente da aplicação
+        ● Objetivo: transformar features de baixo nível em features de alto nível.
+        ● Depende das fontes e tipos, exemplos
+            a. Sensores (IoT) - métodos como wavelet e fourier
+            b. Imagens e documentos - métodos como autoencoders
+                ○ Busca e classifica termos em textos
+                    ■ Pessoas, lugares, empresas, etc.
+
+                ○ Importante para diversos tipos de aplicação, ex: análise de sentimento (sentiment analysis)
+
+                ● Normalmente requer conhecimento de domínio do problema
+                    ○ Ex: extrair features que indiquem defeitos em engrenagens através de imagens
+
+                ● Lembrando: qualidade dos dados define a qualidade dos resultados.
+
+                ● Lembrando: dados de múltiplas fontes
+                    ● Transformar o tipo de dado, ex:
+                        ○ Data: dd/mm/ano em timestamp
+                        ○ Idades em faixas etárias
+                        ○ Categorias para vetores binários
+                
+                ● Discretização: Contínuo para discreto
+                    ○ Mapeamento direto:
+                        0 → Ruim ; 1 → Regular; 2 → Bom
+                    
+                    ○ Mapeamento em intervalos:
+                        ■ Intervalos pré-definidos
+                            Ex: Idades
+                                [0,12] → Criança
+                                [12-17] → Adolescente
+                                [18-60] → Adulto
+                                [60+] → Idoso
+
+                        ■ Intervalos de igual tamanho
+                            (max - min)/nro_intervalos
+
+                            Exemplo de idade = 2, 10, 14, 20, 22, 35, 60, 75
+                            Exemplo para 2 intervalos: (75-2)/2 = 36.5
+                            [2 a 38 (38.5)] e [39 (38.5) a 75] (exemplo para inteiros)
+
+                        ■ Intervalos de igual frequência
+
+                            nro de exemplos / nro de intervalos
+
+                                Exemplo de idade = 2, 10, 14, 20, 22, 35, 60, 75
+                                Para 2 intervalos = [2 a 20] e [21 a 75] 4 exemplos cada
+
+                ● Binarização: Categórico para numérico
+                    Ex: One hot encoding
+                    ______         ____________________
+                    |Color |       |Red |Yellow| Green|
+                    |Red   |       | 1  | 1    | 0    |
+                    |Red   |    -> | 1  | 0    | 0    | 
+                    |Yellow|       | 0  | 1    | 0    |
+                    |Green |       | 0  | 0    | 1    |
+                    |Yellow|       | 0  | 1    | 0    |
+                    |______|       |____|______|______|
+
+                ● Sequência Discreta para Dados Numéricos
+
+                       ACACACTGTGACTG   --> A: 10101000001000
+                                            C: 01010100000100
+                                            T: 00000001010010
+                                            G: 00000001010001
+
+                ● Texto para Numérico: word embeddings                                                            ________________________________________
+                           _______________________________________________________________                        |                                 houses|
+                           |living being | feline | human |gender | royalty| verb |plural|                        |     cat                             * |
+                    cat -> | 0.6         |  0.9   | 0.1   | 0.4   | -0.7   | -0.3 | -0.2 |  (Dimensão Reducional) |      *     kitten                     |
+                 kitten -> | 0.5         |  0.8   | -0.1  | 0.2   | -0.6   | -0.5 | -0.1 |   -->                  |             *                         |
+                 dog    -> | 0.7         |  -0.1  | 0.4   | 0.3   | -0.4   | -0.1 | -0.3 |                        |   dog                                 |
+                 houses -> | -0.8        |  -0.4  | -0.5  | 0.1   | -0.9   |  0.3 |  0.8 |                        |    *                                  |
+                           |_____________________________________________________________|                        |_______________________________________|
+                    |^|                               |^|
+                 Palavras                         Palavras incorporadas                                                   Visualização das palavras incorporadas em 2D
+                ● Séries temporais, grafos, dados espaciais ... 
+
+            c. Logs de acesso e tráfego de rede - inclusive manualmente
+    
+    2 - Limpeza de dados:
+
+        ● Erros na coleta de dados - exemplos:
+            1. Dados faltantes - falha em sensores ou bateria
+            2. Dados errados - ocr ou speech-to-text
+            3. Entradas manual de dados
+
+        ● Intervalos discrepantes, prejudicam a qualidade dos dados
+        
+        ● Estratégias de limpeza se focam então em:
+            1. Dados faltantes
+                Estratégias para dados faltantes:
+                    
+                    1. Eliminar registro completamente
+                    2. Estimar valores
+                    3. Ignorar e usar modelos robustos a dados faltantes
+                    4. Séries temporais e dados espaço-temporais costumam ter solução simples: interpolação
+
+            2. Dados errados ou inconsistentes
+                Estratégias para dados incorretos, duplicados ou inconsistentes
+
+                    1. Detecção de duplicação e inconsistência
+                    2. Conhecimento de domínio
+                    3. Métodos centrados em dados
+            
+            3. Intervalos discrepantes
+                    1. Padronização (standardization):        Zj^i = (xi^j - uj) / @j ou normalização Z-score
+                    _____________________________
+                    |Despesa| Despeza_normalizada|
+                    |1000   | -0,75              |
+                    |2000   |  0,13              |
+                    |3000   |  1,02              |
+                    |1500   | -0,31              |            média = 1850
+                    |1500   | -0,31              |            @ = 1131,62
+                    |1000   | -0,75              |
+                    |3000   |  1,02              |
+                    | 500   | -1,19              |
+                    |4000   |  1,90              |
+                    |1000   | -0,75              |
+                    |_______|____________________|
+
+                    2. Normalização:        yi^j = (xi^j - minj) / (maxj - minj) ou normalização Z-score
+                    _____________________________
+                    |Despesa| Despeza_normalizada|
+                    |1000   | -0,75              |
+                    |2000   |  0,13              |
+                    |3000   |  1,02              |
+                    |1500   | -0,31              |            Normalização min : 500
+                    |1500   | -0,31              |            Normalização max: 4000
+                    |1000   | -0,75              |
+                    |3000   |  1,02              |
+                    | 500   | -1,19              |
+                    |4000   |  1,90              |
+                    |1000   | -0,75              |
+                    |_______|____________________|
+
+    3 - Redução, seleção e transformação de dados:
+
+        Objetivo: representação mais compacta dos dados
+            ● Em termos de registros (linhas) ou atributos (colunas)
+            ● Resulta em alguma perda de informação
+            ● Existem diferentes estratégias de redução
+
+        Estratégias de redução
+            ● Amostragem de dados (data sampling):
+                ● Uma das principais técnicas
+                ● Impossibilidade de usar o conjunto completo
+                ● Importante manter a ‘estrutura’ dos dados
+                ● Reduz o custo computacional
+                ● Balanço entre custo x desempenho
+
+                Estratégias de redução - amostragem - data sampling: (Ver slide)
+
+            ● Seleção de features (feature selection)
+                ● Busca descartar features irrelevantes
+                ● Relevância depende da aplicação/domínio
+                ● Dois tipos de estratégia
+                    ○ Não supervisionada
+                        ○ Remoção baseada nas características dos atributos
+
+                    ● Seleção supervisionada (alvo)
+                        ○ Wrapper: busca features com bom desempenho
+                        ○ Filtros: medem a correlação com a variável alvo
+                        ○ Intrínsicos: já embutidos nos modelos de mineração            
+                    
+                    ● Redução de dimensionalidade
+
+                        ○ com rotação de eixo (Explora correlações entre variáveis)
+                            ○ Principal Component Analysis (PCA)
+                            ○ Singular Value Decomposition (SVD)
+                            ○ Latent Semantic Analysis (LSA)
+
+                        ○ com transformação de tipos
+                            ○ Séries temporais para dados multidimensionais
+                                ○ De um tipo de dado mais complexo para menos complexo
+                                ● Wavelet
+    
+    Resumo:
+        1. Por quê? Dados brutos são imprecisos e problemáticos
+            a. Múltiplas fontes - Heterogêneos
+            b. Faltantes - Errados - Inconsistentes
+        
+        2. Objetivo: melhorar a qualidade dos dados
+        
+        3. Como?
+            a. Extração de features e portabilidade de tipos
+            b. Limpeza
+            c. Redução
+                i. Linhas: normalmente amostragem
+                ii. Colunas: seleção ou transformação

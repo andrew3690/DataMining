@@ -1,0 +1,320 @@
+Tarefas de Data Mining:
+    Preditivas:
+        - Usam algumas variáveis do conjunto de dados para predizer valores futuros de outras variáveis
+
+            - Classificação:
+                - Encontram o modelo para a variável alvo discreta como uma função de valores de variáveis independetes.
+                    Para criar um processo de aprendizado de máquina há um pipeline a ser seguido, da seguinte forma:
+
+
+                Aprendizagem Supervisionada (Cálculo do Erro)
+                            |                                              _____________________
+                            |                                              | Conjunto de Teste |
+                         ___|__________      ___________________           |___________________|
+                        | Conjunto de  |     | Classificador de |           ____|___
+                        | dados        | ->  |    aprendizado   | ->        |Modelo|
+                        |______________|     |__________________|           |______|
+                                                        ^
+                                                        |
+                                    ________________________________________
+                                    |Exemplo:                               |
+                                    |- Arvores de Decisão, baseada nos dados|
+                                    |_______________________________________|
+    
+                Exemplos de Classificação:
+                    - Classificação de transações legítimas de cartões de crédito, como legítimas ou fraudulentas
+                    - Classificação de espaços de terra usando dados de satélite
+                    - Categorização de notícias sobre finanças, tempo, entreterimento
+                
+                Aplicações:
+                (1)
+                    - Detectção de fraudes
+                        - Objetivo: predizer casos de transações fraudulentas em cartões de crédito
+                    
+                        -Estratégia:
+                            - Por meio de uso de dados de transações de cartões de crédito e da informação do detentor da conta bancária
+                                - hábitos de compra, quando compra, a recorrencia de pagamentos
+                            - Categorização de transações passadas como fraudulentas ou válidas
+                            - Criação do modelo de aprendizagem para as classes de transações identificadas
+                            - Uso do modelo para detecção de fraudes em uma conta bancária.
+                
+                (2)
+                    - Detectção da retenção de clientes:
+                        - Objetivo: entender se uma empresa poderá perder um cliente para um possível competidor no mercado
+
+                        - Estratégia: 
+                            - Observar os dados de um cliente, suas ligações, horários de ligações, frequencia semanal de ligações
+                            status financeiro, status civil, etc.
+                            - Categorizar os clientes de acordo se estes são leais ou não
+                            - Obter um modelo de lealdade
+                            - Usar o modelo para identificar e agir para prevenir que um cliente seja perdido
+
+                Exercício:
+                (3)
+                    - Predição de manutenção em estradas:
+                        -Objetivo: predizer quando será necessário realizar a manutenção de trechos de rodovias
+
+                        - Estratégia:
+                            - coletar dados de sensores, feedback de funcionários da empresa, relatos de acidentes, etc, dados meterológicos e geográficos
+                            - Categorizar trechos de acordo com a degração do asfalto
+                            - obter um modelo de Classificação do asfalto
+                            - Usar o modelo para identificar quais regiões da estrada devem ter a manutenção realizada.
+
+        - Regressão:
+            - Predizem o valor de uma variável contínua, baseado no valor de uma váriavel ou no conjunto de variáveis, 
+            assumindo um modelo de dependencia linear ou não linear.
+
+            Exemplos de Regressão:
+                - Predição de quantidades de vendas de um novo produto, baseado no gasto em marketing deste
+                - Predição de velocidades como funções de temperaturas, humidade, pressão atmosférica
+                - Predição de séries temporais no mercado de ações
+            
+            Erro de predição:
+                - É reduzido de acordo com o ajuste dos parametros observados na predição, inicalmente é alto, porém, ao longo do tempo
+                e com a inserção de ajustes, torna-se menor.
+
+    
+    Descritivas: 
+        - Obtenção de padrões interpretáveis que descrevem os dados.
+
+        Clustering: (Tarefa de Aprendizagem não Supervisionada)
+            Obtenção de grupos de objetos que possuam características em comum, sendo similares entre si e a caracterização, aumentando a distancia entre 
+            objetos de características diferentes, e diminuindo a distancia entre objetos de caracterização igual.
+
+            Objetivos:
+                - Entendimento dos dados:
+                    Exemplos:
+                        - Perfilamento de consumidores de um marcado alvo
+                        - Agrupamento de genes que tenham características semelhantes
+                        - Agrupamento de conjuntos de ações do mercado financeiro com flutuação similar
+                
+                - Sumarização:
+                    - Redução do tamanho dos dados em casos de conjuntos de dados grandes.
+    
+            Aplicações:
+                (1)
+                - Segmentação de Mercado:
+                    - Objetivo: subdividir o mercado em subconjuntos de clientes, aonde cada subconjunto talvez selecione como mercado alvo
+                    a ser atingido com uma ação (marketing, ofertas de podutos, etc).
+                
+                    -Estratégia:
+                        - Realizar a coleta de diferentes atributos de clientes baseados nas informações relacionadadas ao estilo de vida, dados geográficos (localização aonde mora, etc)
+                        - Encontrar subconjuntos de clientes similares
+                        - Medir a qualidade a categorização por meio da observação os padroes de compra dos clientes do mesmo conjunto vs os clientes de outros conjuntos.
+                
+                (2)
+                - Agrupamento de Documentos:
+                    - Objetivo: obteção de documentos similares entre si, baseado em termos importantes citados nestes.
+                
+                    -Estratégia:
+                        - Identificar termos recorrentes em cada documento
+                        - Formar conjuntos de termos em comum baseados na frequencia destes
+                        - Realizar a categorização de cada documento.
+                
+                Exercício
+                (3)
+                - Segmentação de desempenho de jogos:
+                    - Objetivo: obter benchmarks de computadores que tenham melhor desempenho em jogos FPS.
+
+                    - Estratégia:
+                        - Identificar o hadware utilizado pela maior parte dos usuários
+                        - Formar conjuntos de usuários que tenham o mesmo tipo de hadware e observar a frequencia de ocorrencia destes
+                        - Medir a qualidade da observação, por meio da observação da quantidade de usuários por tipo de hadware vs usuários de console do mesmo jogo.
+        
+        Regas de Associação:
+            Dado um conjunto de registros, que contém uma quantidade de items de uma dada coleção, busca-se produzir regras de dependencia que
+            predizem a ocorrencia de um item baseado na ocorrencia de outros items.
+
+                Exemplo:
+                        {Milk} -- > {Coke}
+                        {Diaper, Milk} --> {Beer}
+                        
+                        Em um supermercado observou-se a ocorrencia de compras de items como Leite, 
+                        havia em muitos casos a compra de Coca-Cola, o mesmo se observou
+                        em clientes que compravam fraldas e leite, tendiam a comprar cerveja, 
+                        criando padrões de associação, oque tende a criar estratégias para potencializar
+                        a compra items neste estabelecimento.
+
+            
+            Aplicações:
+                (1)
+                - Análises de carrinhos de mercado:
+                    -Objetivo: Por meio da análise de aspectos de compras de usuários, tempo até realizar uma compra, items comprados, recorrencia, etc.
+                    Estabelecer possíveis produtos a serem comprados, promoções para clientes, etc.
+
+                - Diagnósticos de alarmes de sistemas de telecomunicação:
+                    - Regras usadas para encontrar a combinação de alarmes que ocorreram juntos com a mesma frequencia e no mesmo período.
+                
+                - Informações médicas:
+                    - Regras definidas usadas para combinar sintomas de pacientes e os resultados de exames associados com certas doenças
+
+                (2)
+                - Marketing e Vendas Promoções:
+                    Considerando as regras mineradas:
+                        {Diet Coke, ...} --> {Salad}
+                        
+                        Salada como consequencia: pode ser utilizada para aumentar as vendas de salada.
+                        
+                        Diet Coke como antecedente: pode ser usado para determinado para quais produtos serão afetados se o negócio parar de vender o Coca-cola diet.
+
+                        Ambos: Pode ser usado para determinar se um dado quais produtos devem ser vendidos junto com Coca-cola diet para aumentar as vendas de salada.
+                
+                (3)
+                - Auto gerenciamento de supermercados
+                    -Objetivo: Identificar quais items são comprados juntos para obter mais clientes.
+                    
+                    -Estratégia: Processar os pontos de dados coletados com scaners de códigos de barras para encontrar dependencias entre itens.
+
+                    -Regra clássica:
+                        - Se um cliente compra fraldas e Leite, é bem provável que ele compre cerveja
+                        - Então não fique supreso se encontrar latas de cerveja junto com fraldas.
+        
+        Modelagem Descritiva:
+            Descoberta de sequencias:
+                Neste caso, leva-se em conta o tempo de descoberta de cada item de uma dada sequencia de eventos, não siginifica que um evento implique no outro
+                mas sim em cooexistencia de eventos, se um evento ocorre, estatísticamente, este outro evento tem maior chance de ocorrer para este conjunto de dados.
+
+                    Exemplos:
+                        - Em logs de alarmes em sistemas de telecomunicação:
+                                Corrente excessiva em uma linha: -|
+                                                                  |--> alarme de retificação --> alarme de incendio 
+
+                        - Sequencias de Transações:
+                                Em uma loja de livros de computação:
+                                    Intro_Visual_C -> C++_Primer --> Perl_for_dummies
+                        
+                        - Lojas de material esportivo:
+                                (Tenis) -> (Racket,Racketball) --> (Sports Jackets)
+        
+        Detecção de Mudanças:
+            Deteção de mudanças significativas no comportamento de sistemas
+                
+                -Aplicações:
+                    - Detecção de fraudes de cartões de crédito
+                    - Detecção de instrusão em redes
+                    - Identificação de comportamento anomalo de redes de sensores para monitoramento.
+                    - Detecção de mudanças na cobertura florestal de uma região
+                
+                -Outilers: registros que diferem dos conjuntos de dados de forma considerável.
+
+==========================================================================================================================================================================
+
+CRISP-DM: CRoss – Industry Standard Process for Data Mining.
+
+(1) Entendimento do Negócio (ou do problema)
+        Identificação dos objetivos do cliente (organização)
+            • Determinar os objetivos do negócio
+            • Determinar os objetivos de data mining
+
+        – Objetivo
+            – tipo de problema (classificação, agrupamento, …)
+            – critérios para avaliação do modelo.
+        
+        • Produzir plano do projeto
+    
+        Exemplo:
+                Objetivo: uma empresa de fornecimento de água (como a CASAN) deseja diminuir seus custos operacionais
+                
+                Como: diminuindo o consumo de energia elétrica
+                Predição de consumo de água:
+                
+                    Dados:
+                            •consumo diário de água
+                            •aspectos climáticos (temperatura, umidade do ar, …)
+                            •dia da semana e do mês, feriado, férias, ...
+                
+                    Objetivo da mineração: prever o consumo de água de forma a minimizar o
+                    bombeamento em horários mais caros
+
+(2) Entendimento dos Dados
+    • Coletar dados iniciais
+    
+    • Descrever os dados
+        – Número de atributos e instâncias em cada arquivo
+        – Tipos e faixas de valores dos atributos
+        – Significado de cada atributo e sua importância para o objetivo
+        – Estatísticas básicas para alguns atributos (média, DP, máximo, mínimo, freqüência, etc.)
+        – Relações entre os atributos-chave
+
+    • Explorar os dados
+        – analisar a descrição dos dados
+        – usar técnicas de visualização
+            • Visualização é a conversão dos dados para um formato visual ou tabular de forma que características dos dados e
+            da relação entre elementos dos dados possam ser percebidos visualmente.
+
+            • Visualização é uma das mais poderosas técnicas para a exploração dos dados:
+                – humanos têm muita habilidade de analisar grandes quantidades de informação apresentadas sob forma visual
+                – podem detectar padrões gerais e tendências
+                – podem detectar exceções e padrões não usuais
+
+            • Verificar a qualidade dos dados
+
+(3) Preparação de Dados
+    Produção de um conjunto de dados adequado aos algoritmos de mineração
+
+    • Selecionar os dados
+        • motivos:
+            – Requisitos de tempo e espaço
+            – Simplicidade do modelo gerado
+            – Relevância dos atributos
+            – Redundância entre atributos
+            – Acurácia pode ser aumentada
+            • forma:
+            – Manual
+            – Por algoritmos: mais de 30 algoritmos (feature selection)
+
+    • Limpar os dados (dados nulos, ausentes, zerados, inválidos, etc..)
+        Visa garantir a qualidade dos dados
+            • Eliminação de dados errôneos –
+            • Padronização de dados: formato de datas, abreviaturas, valores de atributos (ex. sexo: M ou F, 0 ou 1, Mas e Fem, ...)
+            • Eliminação de duplicatas
+            
+            • Tratamento de valores ausentes
+                – Excluir instâncias
+                – Completar valores ausentes
+                    • Complemento manual
+                    • Complemento com valor constante global: ex: “desconhecido”
+                    • Complementar com o valor mais provável
+                    • Complementar com o valor médio do atributo
+    
+    • Construir dados (criar novos atributos a partir de outros)
+        • Transformação de dados
+            – Normalização
+                • valores muito variados são transformados em um intervalo [0 – 1]
+            
+            – Transformação de valores simbólicos para numéricos
+                • Ex: sexo Masculino = 0 e Feminino = 1
+            
+            – Discretização de atributos
+                • transformar em faixas – ex: idade
+        
+        • Criação de novos atributos.
+            – Ex: área = comprimento x largura
+            – Ex: idade = faixa de idades
+    
+    • Integrar dados: combinar múltiplas tabelas ou outras fontes
+
+    • Formatar dados: modificações sintáticas nos dados, sem alterar o seu significado. Ex:
+        – Primeiro atributo tem que ser uma chave única
+        – O arquivo tem que estar em uma ordem determinada
+        – Retirar vírgulas dos campos para gerar um arquivo com atributos separados por vírgulas
+    
+(4) Modelagem
+    Corresponde a fase de Mineração de Dados utilizada por outros autores
+        • Selecionar a técnica de modelagem
+        • Gerar projeto de teste
+        • Construir modelo: mineração propriamente dita (aplicação do algoritmo)
+
+(5) Avaliação
+        • Interpretar e avaliar os resultados em relação aos objetivos do usuário
+        
+        • Avaliar resultados
+        • Revisar o processo
+        • Determinar próximos passos: ir para a fase final de disponibilização ou voltar para alguma etapa anterior
+
+(6) Disponibilização
+    • Planejar disponibilização: decidir a estratégia para a integração dos resultados obtidos no ambiente da organização
+    
+    • Planejar monitoramento e manutenção:
+    • Produzir relatório final
+    • Revisar o projeto: avaliar pontos positivos e negativos do projeto, problemas e sugestões.
