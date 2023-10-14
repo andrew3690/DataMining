@@ -57,9 +57,9 @@ Classificação:
                 se a matriz detém muita dispersão dos dados, o modelo não está efetivamente intepretando os dados
                 quanto mais próximo de 1 (100 %) o valor da matriz principal é.
 
-                Taxa de Acurácia: Número de predições / (Número de predições erradas ) = Soma(Mixj){i == j} / Soma(Mixj) {i != j}
+                Taxa de Acurácia: Número de predições / (Número de predições erradas ) = Soma(Mixj){i == j} / Soma(Mixj) {i != j & i = j}
 
-                Taxa de Erro: (Número de predições erradas ) / ( Número de predições) =  Soma(Mixj) {i != j} / Soma(Mixj){i == j}
+                Taxa de Erro: (Número de predições erradas ) / ( Número de predições) =  Soma(Mixj) {i != j} / Soma(Mixj){i == j & i != j}
 
         - Diversas métricas de performance
     
@@ -130,9 +130,18 @@ Classificação:
 
     Arvores de Decisão- C4.5
         - Atributos podem ter valores desconhecidos
-        - trabalha com valores contínuos
+            ● atributos podem ter valores desconhecidos → considerados como um novo valor do atributo, por exemplo o valor “desconhecido”.
+
+        - trabalha com valores contínuos: (Ver slides 66 - 69)
+            1. registros ordenados pelo atributo contínuo
+            2. o algoritmo cria intervalos segundo as alterações na variável de decisão (classe).
+            3. o ganho de informação é calculado para cada intervalo
+
         - usa pruning para reduzir overfitting
+            -> tenta remover nodos da árvore (podar) de baixo para cima - de forma a reduzir o sobreajuste
         - gera regras de decisão a partir da árvore
+
+
 
          
 

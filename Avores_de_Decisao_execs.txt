@@ -1,0 +1,44 @@
+Exercicio 1:
+
+(A) 
+    entropia: (2:4) * log2(2:4) + (2:4) * log2(2:4) = 0.5 + 0.5 = 1.0 -> Entropia(S) = 1.0
+
+(B)
+     G(S,A) = Entropia(S) - Soma((|Sv| / |S|) Entropia(Sv))
+
+     A:
+        SV1(A=1): (x1,x2) -> Entropia(SV1) = -1 * log2(1) - 0 = 0
+        SV2(A=2): (x3,x4) -> Entropia(SV2) = -1 * log2(1) - 0 = 0
+
+        Ganho(S, A) = 1 - [(2/4) * 0 + (2/4) * 0] = 1
+    
+    B:
+        Sv1 (B=1): 2 exemplos (X1, X4)
+        Sv2 (B=2): 2 exemplos (X2, X3)
+        Entropia(Sv1) = -1 * log2(1) - 0 = 0
+        Entropia(Sv2) = -1 * log2(1) - 0 = 0
+
+        Ganho(S, B) = 1 - [(2/4) * 0 + (2/4) * 0] = 1
+
+    C:
+        Sv1 (C=3): 1 exemplo (X1)
+        Sv2 (C=4): 3 exemplos (X2, X3, X4)
+        Entropia(Sv1) = -1 * log2(1) - 0 = 0
+        Entropia(Sv2) = -0.25 * log2(0.25) - 0.75 * log2(0.75) ≈ 0.811
+
+        Ganho(S, C) = 1 - [(1/4) * 0 + (3/4) * 0.811] ≈ 0.188
+    
+(C)
+    Dado que "A" tem o maior ganho de informação, entao a arvore deve começar por este atributo,
+    logo apos, utiliza-se o atributo B
+
+    Se A =1, vá para B
+        - Se B =1, vá para a classe P
+        - Se B =2, vá para a classe P
+    
+    Se A =1, vá para C
+        - Se C =3, vá para a classe P
+        - Se B =4, vá para a classe N
+
+Exercicio 2:
+
