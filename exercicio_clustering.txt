@@ -1,0 +1,8 @@
+(1)
+
+(2)
+
+(3)
+
+Depende do algoritmo utilizado, mas serão utilizados 8 clusters, dado que o algoritm o minimo produz diferentes clusters
+
