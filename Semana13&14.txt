@@ -1,11 +1,55 @@
-Clustering Hierárquico:
-    ◉ Produz uma hierarquia de clusters
+    Clustering Hierárquico:
+
+    Produz uma hierarquia de clusters
         ■ Muitas fontes de dados produzem estruturas hierárquicas, como:
             ● Espécies de plantas e animais
-            ● Categorias de produtos
-    
-    ◉ A estrutura hierárquica pode ser usada para
-    entender a semântica do relacionamento entre os dados
-    
-    ◉ Especialistas podem posteriormente rotular
+            ● Categorias de produtos 
+        
+        ◉ A estrutura hierárquica pode ser usada para entender a semântica do relacionamento
+        entre os dados
 
+        ◉ Especialistas podem posteriormente rotular
+    
+    Vantagens:
+        ◉ Não requer pré-definição do número de clusters
+            ■ O número pode ser definido cortando o dendograma
+        ◉ Podem ser utilizados para criar taxonomias
+            ■ Exemplo: aplicação na biologia - animais e plantas
+
+    Tipos:
+        ◉ Aglomerativo
+            ■ Começa com n clusters individuais
+                ● n = número de instâncias
+            ■ A cada iteração unem-se os pontos mais próximos até formar 1 único cluster (ou k clusters)
+        ◉ Divisivo
+            ■ Começa com 1 cluster = conjunto de dados
+            ■ A cada iteração divide um cluster até todos terem apenas uma instância (ou k clusters)
+
+        ◉ Aglomerativo: de baixo para cima (bottom-up)
+        ◉ Divisivo: de cima para baixo (top-down)
+    
+    Matriz de distância:
+        ◉ Abordagens tradicionais usam uma matriz de similaridade (ou distância) - une ou divide um cluster de cada vez
+    
+    Aglomerativo:
+        ◉ Abordagem mais popular e utilizada
+        ◉ Algoritmo básico é muito simples
+            1. Calcular a matriz de distâncias
+            2. Transformar cada ponto em um cluster
+            3. Repetir
+            4. Unir os dois cluster mais próximos
+            5. Atualizar a matriz de distâncias
+            6. Até restar apenas um cluster (ou um valor pré-definido k)
+        ◉ Operação chave é o cálculo da distância entre dois clusters
+        ◉ Diferentes algoritmos se diferenciam na forma como a distância é calculada
+
+
+    ◉ MIN - Best/Single Linkage
+        ◉ Distância é calculada entre os dois pontos mais próximos entre clusters
+
+        
+    ◉ MAX - Worst/Complete Linkage
+    ◉ Média do grupo - Group Average
+    ◉ Distância entre centróides
+    ◉ Outros usam função objetivo
+    ■ Método de Ward
