@@ -1,0 +1,11 @@
+Clustering Hierárquico:
+    ◉ Produz uma hierarquia de clusters
+        ■ Muitas fontes de dados produzem estruturas hierárquicas, como:
+            ● Espécies de plantas e animais
+            ● Categorias de produtos
+    
+    ◉ A estrutura hierárquica pode ser usada para
+    entender a semântica do relacionamento entre os dados
+    
+    ◉ Especialistas podem posteriormente rotular
+
