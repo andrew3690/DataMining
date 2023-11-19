@@ -1,0 +1,194 @@
+Análise de Associação
+
+    Conceitos básicos e Algoritmo Apriori:
+        ◉ Problema clássico de mineração de padrões de associação: análise de carrinho (market basket analysis)
+            ■ Objetivo: encontrar associações entre conjuntos de itens comprados
+
+        ◉ Nível de associação definido pela frequência de ocorrência dos conjuntos
+        ◉ Várias denominações para os conjuntos encontrados:
+            ■ Conjunto de itens frequentes (frequent itemsets)
+            ■ Padrões frequentes (frequent patterns)
+            ■ Grandes conjuntos de itens (large itemsets)
+    
+    Aplicações:
+        ◉ Mineração de padrões de associação
+            aplicam-se a muitas áreas: 
+                ■ Dados de supermercado (market basket analysis) 
+                ■ Mineração de textos 
+                ■ Bioinformática 
+                ■ Diagnóstico médico
+    
+        Aplicação prática cross selling
+            ◉ SE produto A ENTÃO produto B
+        
+        Conceitos Básicos
+            ◉ A partir de conjunto de transações, encontre regras para a
+            predição da ocorrência de itens baseado na ocorrência de outros itens na transação
+        
+            Transações (cada transação é uma compra)
+    
+    Definições
+
+        ◉ Itemset
+            ■ Conjunto de um ou mais itens
+                ● Exemplo: {Bread, Milk, Diaper}
+            ■ k-itemset
+                ● Um itemset com k itens
+    
+        ◉ Suporte (sup)
+        ■ Fração das transações que contêm um item set
+        ■ Ex: sup({Break, Milk, Diaper}) = ⅖
+    
+        ◉ Conjunto de itens frequentes
+            ■ Itemset cujo suporte >= minsup
+        
+        Se minsup = 60%, o itemset {Bread, Milk, Diaper} seria um conjunto frequente?
+    
+        ◉ Regras de associação
+            ■ Expressão na forma:
+                ● Antecedente → Consequente
+            ■ X → Y, onde X e Y são itemsets
+                ● Ex: {Milk, Diaper} → {Beer}
+
+        ◉ Métricas para avaliação das regras
+        ◉ Suporte(X→ Y)
+            ■ Fração das transações que contêm antecedente e consequente (X U Y)
+        
+        ◉ Confiança(X→ Y)
+            ■ Estimativa de P(Y|X) = sup(X → Y) / sup(X)
+        
+        Regras Interessantes:
+
+            Para todo k-itemset (com k>1)
+                Criar partições binárias do itemset — Xe Y
+                    Calcular a confiança da regra de associação
+                        X -> Y
+
+            Se é superior ou igual a minconf, então a regra gerada é interessante
+
+        Observação
+            — sup (X>Y) > minsup
+            — Conf(X>Y) > minconf
+        
+        Dado um conjunto de transações T, o objetivo da mineração de regras de associação é encontrar todas as regras com
+            suporte > minsup
+            confiança > minconf
+
+        Abordagem da força bruta:
+            liste todas as possíveis regras de associação
+            calcule o suporte e a confiança para cada regra                                     ---> Computacionalmente proibitivo
+            corte as regras que não satisfazem minsup ou minconf
+    
+        Complexidade computacional:
+            ◉ Considerando d itens únicos:
+                ■ Total de itemsets = 2d
+                ■ Total de regras de associação
+        Mineração
+        Exemplos de regras:
+    
+        {leite,fralda} → {cerveja} (s=0.4, c=0.67) 
+        {leite,cerveja} → {fralda} (s=0.4, c=1.0) 
+        {fralda,cerveja} → {leite} (s=0.4, c=0.67) 
+        {cerveja} → {leite, fralda} (s=0.4, c=0.67) 
+        {fralda} → {leite, cerveja} (s=0.4, c=0.5) 
+        {leite} → {fralda, cerveja} (s=0.4, c=0.5)
+        
+        TID Items
+        1   pão, leite
+        2   pão, fralda, cerveja, ovos
+        3   leite, fralda, cerveja, coca
+        4   pão, leite, fralda, cerveja
+        5   pão, leite, fralda, coca
+        
+        As regras acima são partições binárias do mesmo itemset: {leite, fralda, cerveja}
+        
+        Regras originadas do mesmo itemset têm o mesmo suporte mas podem ter confianças diferentes - portanto podemos separar os cálculos
+    
+        ● Abordagem em dois passos:
+            1. Geração dos conjuntos frequentes (frequent itemset)
+                ○ Gerar todos os conjuntos frequentes com suporte >= minsup
+
+            2. Geração das regras
+                ○ Gerar regras com alta confiança a partir dos conjuntos frequentes, onde cada regra é uma partição binária do conjunto
+
+            Geração dos conjuntos frequentes ainda é computacionalmente custosa
+        
+        Para d items, há 2**d possíveis itemsets (exemplo com d=5)
+
+        Princípio Apriori
+            ◉ Se um conjunto de itens (itemset) é frequente, então todos os seus subconjuntos também são
+            ◉ Esse princípio é verdadeiro devido a seguinte propriedade da medida de suporte:
+                    X,Y: (X Y) -> s(X) >= s(Y)
+
+            ■ O suporte de um conjunto de itens nunca excede o suporte dos seus subconjuntos
+            ■ Isso é conhecido como propriedade anti-monotônica
+
+            Fk: conjuntos frequentes de tamanho k (frequent k-itemsets)
+            Ck: conjuntos candidatos de tamanho k (k-itemsets)
+
+            ● Algoritmo
+                ○ Para k=1 - (C1 contém todos os elementos)
+                ○ Gerar F1 = {frequent 1-itemsets}
+                ○ Repetir que Fk seja vazio
+                    ■ Geração de candidatos: Gerar Ck+1 a partir de Fk
+                    ■ Corte de candidatos: Elimine candidatos em Ck+1 contendo subconjuntos de tamanho k que são infrequentes
+                    ■ Cálculo do suporte: calcular o suporte para cada candidato Ck+1 escaneando o banco de transações DB
+                    ■ Eliminar candidatos em Ck+1 com suporte < minsup => os que restaram são os conjuntos frequentes Fk+1
+            
+            Para reduzir o número de comparações, uma estrutura hash é utilizada para armazenar os candidatos
+                ○ Ao invés de comparar cada transação com cada candidato, comparar apenas com candidatos em um bucket da hash
+            
+            Geracao de regras:
+                Dado um conjunto frequente L, ache todos os subconjuntos não-vazios f contidos em L tal que f → L - f satisfaça o requerimento mínimo de confiança
+                    ■ Se {A,B,C,D} é um conjunto frequente, as regras candidatas são:
+                        ABC→ D, ABD→ C, ACD→ B, BCD→ A, A→ BCD,
+                        B→ ACD, C→ ABD, D→ ABC, AB→ CD, AC → BD,
+                        AD → BC, BC → AD, BD → AC, CD → AB
+                
+                ◉ Se |L| = k, existirão 2k - 2 regras de associação candidatas
+            
+            ◉ Em geral, a medida de confiança não possui a propriedade anti-monotônica
+                ■ conf(ABC → D) pode ser maior ou menor que conf(AB→ D)
+
+            ◉ Entretanto a confiança das regras geradas a partir do mesmo item set possui a propriedade anti-monotônica
+                ■ Ex: Para o conjunto frequente {A,B,C,D}
+                ● conf (ABC → D) >= conf(AB → CD) >= conf(A → BCD)
+                ■ Confiança é anti-monotônica em relação ao consequente
+            
+            Número de regras cresce exponencialmente
+                ◉ Considerando d itens únicos:
+                    ■ Total de itemsets = 2d
+                    ■ Total de regras de associação
+            
+            ◉ Suporte e confiança usados como base para filtrar regras
+                ◉ Seria mesmo possível usar apenas a medida de confiança para definir se uma regra é ou não interessante?
+
+                Exemplo:
+                A → B com confiança de 90%, é interessante? DEPENDE!
+                Se B aparece sozinho em 90% das transações: NÃO!
+            
+            Lift
+                ◉ regra (1): A → B com confiança de 90%
+                    ■ B aparece em cerca de 90% das transações
+                ◉ regra (2): C → D com confiança de 70%
+                    ■ D aparece em apenas 10% das transações
+            
+                lift = (confiança da regra) / (suporte do consequente)
+                    
+                    lift da regra (1) = 0,9 / 0,9 = 1 - lift da regra (2) = 0,7 / 0,1 = 7
+                    
+                    A ocorrência de C indica que a probabilidade da ocorrência de D aumenta 7x
+            
+            Regras redundantes:
+                Uma regra de associação X→ Y é redundante se existe uma outra regra
+                    X’ → Y’, onde X é um subconjunto de
+                    X’ e Y é um subconjunto de Y’, tal que
+                suporte e confiança das regras são idênticas.
+            
+            Solução: conjuntos frequentes fechados (closed frequent itemset)
+
+            Conjuntos Frequentes Fechados
+
+                ◉ Um conjunto de itens (itemset) é considerado fechado se nenhum de seus superconjuntos imediatos tem o mesmo valor de suporte
+
+                ◉ Conjuntos frequentes fechados não geram regras redundantes
