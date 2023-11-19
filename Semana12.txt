@@ -1,0 +1,119 @@
+    Tipos de Clustering
+        ◉ Múltiplas possibilidades de categorização Mais comum:
+        
+        ■ Particionamento
+            ● Divisão de objetos em partições não sobrepostas
+        ■ Hierárquico
+            ● Conjunto de clusters aninhados organizados em árvore
+    
+    Aplicações:
+    ◉ Sumarização de dados: reduzir o volume de dados - extrair o principal
+
+    ◉ Entendimento por semelhança:
+        ■ Documentos
+        ■ Proteínas com funções similares
+        ■ Ações que variam da mesma forma
+    
+    ◉ Segmentação de clientes 
+        ■ Filtro colaborativo (collaborative filtering)
+    
+        ● Shopping possui:
+            idade, gênero e renda anual dos clientes -
+            provavelmente possui relação com perfil de consumo
+        
+        ◉ Análises de redes sociais
+            ■ Detecção de comunidades
+        
+        ◉ Entendimento e pré-processamento
+            ■ Detecção de outliers
+            ■ Modelagem descritiva
+            ■ Combinação com classificadores
+
+    Preferências e características detectadas em um grupo de clientes
+    similares são utilizadas para fazer recomendações ao grupo.
+
+    Medidas de similaridade:
+        Normalmente usa-se uma função de distância
+            (1) distância entre um objeto e ele próprio (ou idênticos) é 0
+            
+            (2) simetria
+            
+            (3) Respeita a desigualdade triangular
+
+                ● Dado 3 objetos a soma de distâncias é maior ou igual que a terceira
+                ■ não assume valores negativos (menor valor é 0)
+
+        Distância Manhattan x Distância Euclidiana
+            Distância euclidiana muito comum para variáveis numéricas
+                ■ manhattan menor custo computacional
+        
+        ◉ Outras métricas - binários/strings
+            ■ Hamming
+            ■ Levenshtein
+            ■ Longest common subsequence (LCS)
+            ■ Outras
+
+K-Means:
+    ◉ Abordagem particional
+    
+    ◉ Número de clusters, K, precisa ser especificado
+    
+    ◉ Cada cluster associado com um centróide (ponto central) - medoid se for uma instância do conjunto de dados
+    
+    ◉ Cada instância é atribuída ao cluster (com centróide) mais próximo
+
+    características:
+        ◉ Centróides normalmente definidos aleatoriamente
+            ■ Clusters diferentes para cada inicialização
+
+        ◉ Centróides normalmente são a média de todos os pontos do cluster
+        
+        ◉ Métricas de distância/similaridade podem variar: distância euclidiana, manhattan, similaridade de cossenos e etc.
+        
+        ◉ Convergência ocorre para a maioria das métricas
+        
+        ◉ Convergência normalmente ocorre nas primeira iterações 
+
+    limitações:
+
+
+        ◉ Dificuldades em criar clusters que possuam:
+            ■ Diferentes tamanhos ou densidades
+            ■ Formas não globulares
+
+        ◉ Problemas quando existem outliers no conjunto de dados
+            ■ Busca agrupar todos os pontos
+            ■ Por isso não pode ser usado para detecção de outliers
+
+    soluções para a inicialização:
+
+        ◉ Rodar múltiplas vezes normalmente ajuda
+            ■ Dependendo do número de clusters pode ser inefetivo
+        
+        ◉ Inicializar com um K maior que o pretendido e posteriormente selecionar os mais afastados a partir deles
+        
+        ◉ Utilizar outras técnicas (amostragem e clustering hierárquico) para inicializar os centróides
+        
+        ◉ Gerar um grande número de clusters (k) e posteriormente um agrupamento hierarquico
+
+    avaliando:
+
+        ◉ Medida mais comum é a soma do erro quadrático (SSE)
+            Sum of Squared Error
+        
+        ◉ X é uma instância do cluster Ci e mi é o ponto representativo (centróide ou medoid) de Ci
+        ◉ Dado dois possíveis agrupamentos, preferimos o menor erro
+        ◉ Aumentar o número de clusters ajuda a reduzir o SSE
+            ■ Poucos (bons) clusters podem apresentar SSE baixo 
+
+    pré-processamento e pós-processamento:
+        
+        ◉ Pré-processamento
+            ■ Normalizar os dados
+            ■ Eliminar outliers
+        
+        ◉ Pós-processamento
+            ■ Eliminar pequenos clusters (podem ser outliers)
+            ■ Dividir clusters com SSE muito alto
+            ■ Unir clusters próximos com SSE baixo
+
