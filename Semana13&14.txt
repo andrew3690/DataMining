@@ -46,10 +46,94 @@
 
     ◉ MIN - Best/Single Linkage
         ◉ Distância é calculada entre os dois pontos mais próximos entre clusters
+            d(c1,c2) = min ||x - y||
 
-        
+            Vantagens:
+                ◉ Captura formas não elípticas
+            
+            Limitações:
+                ◉ Sensível a ruídos e outliers
+            
     ◉ MAX - Worst/Complete Linkage
+        ◉ Distância é calculada entre os dois pontos mais distantes entre clusters
+            d(c1,c2) = max ||x - y||
+        
+        Vantagens:
+            ◉ Menos sensível a ruídos e outliers
+        
+
+        Limitações:
+            ◉ Tende a quebrar grandes clusters
+            ◉ Enviesado em criar clusters globulares
+
     ◉ Média do grupo - Group Average
+        ◉ É usada a média da distância ponto a ponto entre dois clusters
+            dist(ci,cj) = soma( dist(pi,pj)) / (|ci| * |cj|)
+        
+        ◉ Meio termo entre Single e Complete Linkage
+            ◉ Vantagens: menos suscetível a ruídos e outliers
+            ◉ Limitações: tendência a criar formas globulares
+
     ◉ Distância entre centróides
-    ◉ Outros usam função objetivo
-    ■ Método de Ward
+        ◉ Outros usam função objetivo
+            ■ Método de Ward:
+            Delta SEiUj = SEIUj - SEi - SEj
+    
+    Clustering Hierárquico:
+    Complexidade:
+        ◉ Espaço: O(N²) para a matriz de distâncias
+            ■ N = número de pontos
+        ◉ Tempo: O(N³) na maior parte dos casos
+            ■ Cálculo e atualização da matriz de distâncias
+            ■ Pode ser reduzida para O(N²log(N))
+    
+    Clustering em densidade:
+
+        ◉ Definição de cluster: regiões de alta densidade de instâncias separadas por regiões de baixa densidade
+        
+        ◉ Algoritmos baseados em densidade são projetados para encontrar clusters com base na definição de centro (core)
+            ■ Cada ponto tem muitos pontos em sua vizinhança
+
+            ◉ Vizinhança definida por um raio: epsilon (Eps)
+            ◉ Muitos pontos = minPts
+
+                Região densa é uma região em que todos os pontos têm ao menos MinPts em um raio Eps ao seu redor
+    
+        ◉ Density-based spatial clustering of applications with noise (DBSCAN): algoritmo baseado em densidade
+            ■ Densidade = número de pontos dentro de um raio especificado (Eps)
+
+            ■ Classifica os pontos em três tipos:
+                ● Centro (core)
+                ● Borda (border)
+                ● Ruído (noise)
+        
+        ◉ Um ponto é um core point se ele tem mais de um número especificado de pontos (MinPts) dentro do círculo de raio Eps
+
+        ◉ Um border point tem menos do que MinPts dentro do círculo de raio Eps, mas ele está na vizinhança (definida por Eps) de um core point
+        
+        ◉ Um noise point (ou outlier) é todo ponto que não é nem core point nem border point.
+
+        Conexão por densidade
+            Um ponto p é conectado por densidade a um ponto q (em relação aos parâmetros Eps, MinPts) se existir um objeto O (core) tal que p e q são
+            alcançáveis por densidade a partir de O. Neste caso todos os pontos dentro do eps pertencem ao mesmo cluster
+        
+        Efeito dos parâmetros:
+            Eps: Alto | MinPt: Alto | Resultado: Poucos cluters, grandes e densos
+            Eps: Baixo | MinPt: Baixo | Resultado: Muitos cluters, pequenos e menos densos
+            Eps: Alto | MinPt: Baixo | Resultado: cluters grandes e menos densos
+            Eps: Baixo | MinPt: Alto | Resultado: clusters pequenos e muito densos
+        
+        Vantagens:
+            ◉ Resistente a ruído/outliers
+            ◉ Cria agrupamentos com formas arbitrárias
+       
+        Limitações:
+            ◉ Densidades variáveis
+            ◉ Alta dimensionalidade
+        
+        Determinando EPS e MinPts
+            ◉ A ideia é que os pontos em um cluster estejam a uma distância similar do seu k-vizinho mais próximo
+            ◉ Outlier vão estar a uma distância maior do seu k-vizinho mais próximo
+            ◉ Usa-se o Método do cotovelo (Elbow method)
+        
+        
